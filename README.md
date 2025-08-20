@@ -1,5 +1,24 @@
 # LAB-32-PPTP
 tanggal 20 agustus 2025
+# Point to Point Tunnel Protocol  
+  PPTP di Mikrotik dapat dikonfigurasi menjadi PPTP server dan PPTP client atau langsung bersamaan keduanya. Untuk melihat service PPTP ini aktif atau tidak, kita bisa cek di **system > package > PPP**.  
+
+![](IMAGES/pkg.PNG)  
+  
+  PPTP adalah protokol jaringan yang memungkinkan kita untuk mengirimkan paket data atau membuat sebuah koneksi melalui internet yang bersifat secure. Fungsi PPTP, misalnya kita ingin menghubungkan antara kantor A dan B dan kita ingin menghubungkan kedua kantor tersebut melalui jaringan internat, maka cara yang paling mudah dan bsia dikatakan aman adalah mengunakan PPTP.  
+
+# Konfigurasi PPTP Server1 
+![](IMAGES/site.png)  
+  
+1. Kita masuk ke **PPP > Interface > PPTP Server**, lalu pastikan **Enable** nya di checklist dan default profilenya **default-encryption**.  
+
+![](IMAGES/PPP.PNG)  
+
+2. Selanjutnya kita akan membuat akun untuk login, pergi ke **PPP > secret > add**. Isi name, password untuk login client. Untuk service PPTP ini ada 2 pilihan, yaitu **any** dan **pptp**, kita akan memilih yang lebih spesifik yaitu **pptp**. Profile kita pilih yang **default encryiption**, Local address itu merupakan alokasi IP Address yang akan didapat oleh PPTP server dan Remote address merupakan alokasi IP yang diberikan ke PPTP client. Untuk addressnya kita isi sesuai topologi.  
+
+![](IMAGES/secret.PNG)  
+
+3. Sampai disini, proses pembuatan PPTP server pada Office A sudah selesai.  
 
 # konfigurasi PPTP client 
 1. masuk ke mikrotik clinet  
@@ -36,4 +55,30 @@ dan flag nya R berarti sudah running/terkoneksi.
 
 ![m](p5.PNG)
 
+# Konfigurasi PPTP Server2
+1. Jika client sudah selesai, kita bisa lihat di server bagian **active connecions** ada user yang sedang aktif.  
+
+![](IMAGES/usr.PNG)  
+
+2. Kita juga bisa lihat di tab **PPP > Interface** ada interface baru yang terbuat secara otomatis.  
+
+![](IMAGES/intfc.PNG)  
+
+3. Di bagian **IP > Addresses** juga ada IP baru dengan interface pptp   
+
+![](IMAGES/addrslt.PNG)  
+
+4. Sekarang kita tambahkan static route baru, di **IP > routes**, Dst Addressnya kita isi dengan IP address yang ada pada jaringan Office B **192.168.1.0/24**, gateway nya **10.0.0.2** atau bisa juga dengan memilih interface.  
+
+![](IMAGES/routepptp.png)  
+
+5. Jika sudah coba tes koneksi dengan ping ke masing-masing, dari Server ke Client dan sebaliknya.  
+
+![](IMAGES/qwerty.png)  
+
+# Kesimpulan  
+  Mikrotik RouterOS bisa difungsikan baik sebagai server maupun client atau bahkan diaktifkan keduanya bersama dalam satu mesin yang sama. Feature ini sudah termasuk dalam package PPP sehingga anda perlu cek di menu system package apakah paket tersebut sudah ada di router atau belum.  
+  
+# Sumber
+Youtube - Citraweb - https://www.youtube.com/watch?app=desktop&v=jyjTdpsUAIY&t=17m20s
  
